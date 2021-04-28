@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cvs" width="400" height="300" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        // 矩形
+        context.beginPath();
+        context.fillStyle='red';
+        context.rect(10, 10, 100, 100); // 描边矩形，同strokeRect
+        context.fillRect(110, 110, 100, 100); // 填充矩形
+        context.clearRect(10, 10, 150, 180); // 橡皮擦,好像只能擦掉填充矩形
+        context.stroke();
+        
+        // 圆弧
+        context.beginPath();
+        context.fillStyle='yellow';
+        context.moveTo(150, 150);
+        
+        context.arc(150, 150, 100, Math.PI / 180 * 0, Math.PI / 180 * 30, true);
+        context.closePath();
+        context.fill();
+        context.stroke();
+        
+        
+    </script>
+</body>
+</html>

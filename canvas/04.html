@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="cvs" width="600" height="600" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let ctx = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+
+        // 设置阴影
+        // ctx.fillStyle = 'rgba(255,0,0, .9)';
+        // ctx.shadowColor = 'teal';
+        // ctx.shadowBlur = 10;
+        // ctx.shadowOffsetX = 10;
+        // ctx.shadowOffsetY = 10;
+        // ctx.fillRect(100, 100, 100, 100);
+        
+        // //创建线性渐变的对象，
+        // let grd = ctx.createLinearGradient(0, 0, 170, 0);
+        // grd.addColorStop(0, 'black'); //添加一个渐变颜色，第一个参数介于 0.0 与 1.0 之间的值，表示渐变中开始与结束之间的位置。
+        // grd.addColorStop(1, 'white'); //添加一个渐变颜色
+        // ctx.fillStyle = grd; //关键点，把渐变设置到 填充的样式
+        // ctx.fillRect(100, 100, 500, 500);
+
+        // // 设置圆形渐变
+        // let rlg = ctx.createRadialGradient(300, 300, 10, 300, 300, 200);
+        // rlg.addColorStop(0, 'teal'); //添加一个渐变颜色
+        // rlg.addColorStop(0.4, 'navy');
+        // rlg.addColorStop(1, 'purple');
+        // ctx.fillStyle = rlg; //设置 填充样式为延续渐变的样式
+        // ctx.fillRect(100, 100, 500, 500);
+
+        // 绘制背景图
+        let img = new Image()
+        img.src = 'https://www.baidu.com/img/flexible/logo/pc/result@2.png'
+        img.onload = function (){
+            let pat = ctx.createPattern(img, 'repeat');
+            ctx.rect(0, 0, 150, 100);
+            ctx.fillStyle = pat; //  把背景图设置给填充的样式
+            ctx.fill()
+        }
+    </script>
+</body>
+
+</html>

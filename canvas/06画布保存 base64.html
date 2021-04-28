@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img id="img-demo" src="" alt="">
+    <canvas id="cvs" width="600" height="600" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        context.save();
+        context.beginPath();
+        
+        context.translate(200, 200); // 当前画布位移到200,200位置
+        context.rotate(Math.PI / 180 * 30);
+        context.scale(2, 2); // 放大
+        context.globalAlpha=0.3;
+        context.moveTo(0,0);
+        context.lineTo(400, 0);
+        context.moveTo(0,0);
+        context.lineTo(0,400);
+        context.stroke();
+        
+        let dataURL =canvas.toDataURL('image/png');
+        console.log(dataURL);
+        let img = document.querySelector("#img-demo");//拿到图片的dom对象
+        img.src = dataURL
+        
+    </script>
+</body>
+
+</html>

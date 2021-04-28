@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cvs" width="300" height="300" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let cvsCtx = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        //绘制表格
+        let rectH = 10;
+        let rectW = 10;
+        cvsCtx.beginPath(); //开始路径
+        for(let i=0;i<=canvas.height/rectH;i++){
+            // 横线
+            cvsCtx.moveTo(0, rectH*i);
+            cvsCtx.lineTo(canvas.width, rectH*i);
+            // 竖线
+            cvsCtx.moveTo(rectW*i, 0);
+            cvsCtx.lineTo(rectW*i,canvas.height);
+            
+        }
+        cvsCtx.stroke();
+        
+    </script>
+</body>
+</html>

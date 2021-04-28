@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="cvs" width="600" height="600" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        let img = new Image()
+        img.src = 'https://www.baidu.com/img/flexible/logo/pc/result@2.png'
+        img.onload = function () {
+            context.drawImage(img, 100, 100);
+            context.drawImage(img, 100, 300, 100, 100);
+
+            let width = img.width, height = img.height
+
+            context.drawImage(img, 400, 300, 100, 100*height/width);
+
+            context.drawImage(img, 0, 0, 200, 100, 100, 400, 100, 100);
+        }
+
+
+    </script>
+</body>
+
+</html>

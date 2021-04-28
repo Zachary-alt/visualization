@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="cvs" width="400" height="400" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器
+    </canvas>
+    <button id="go">慢走</button>
+    <button id="run">快跑</button>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        // let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        // let img = new Image()
+        // img.src = '../images/foxJump.png'
+        // let frameIndex=0
+        // let actionIndex=0
+        // img.onload = function () {
+        //     setInterval(()=>{
+        //         context.clearRect(0, 0, canvas.width, canvas.height);
+                
+        //         context.drawImage(img,frameIndex*192,actionIndex*150,192,150, 100, 100, 192/2, 150/2);
+        //         frameIndex++
+        //         frameIndex%=4
+        //     },1000/10)
+        // }
+        // document.getElementById('go').onclick=function(){
+        //     actionIndex=1
+        // }
+        // document.getElementById('run').onclick=function(){
+        //     actionIndex=0
+        // }
+
+
+        class fox{
+            constructor(){
+                // this._target = props.target
+                this._timer=undefined
+                this._frameIndex=0
+                this._actionIndex=0
+                this._foxH=192
+                this._foxW=150
+                this._img=new Image()
+                this._img.src = '../images/foxJump.png' 
+                // super(props)
+            }
+            init(target){
+                this._target = target
+                this._context = target.getContext('2d')
+                console.log(this._context.clearRect,this);
+                
+                let that=this
+                this._img.onload = function (){
+                    that._context.clearRect(0, 0, target.width, target.height);
+                    that._context.drawImage(that._img,that._foxH,that._foxW,that._foxH,that._foxW, 100, 100, that._foxH/2, that._foxW/2);
+                }
+                return this
+            }
+            start(){
+                if(this._timer) clearInterval(this._timer)
+                this._timer=setInterval(()=>{
+                    this._context.clearRect(0, 0, this._target.width, this._target.height);
+                    
+                    this._context.drawImage(this._img,this._frameIndex*192,this._actionIndex*150,192,150, 100, 100, 192/2, 150/2);
+                    this._frameIndex++
+                    this._frameIndex%=4
+                },1000/10)
+            }
+            go(){
+                this._actionIndex=1
+                this.start()
+            }
+            run(){
+                this._actionIndex=0
+                this.start()
+            }
+        }
+        let fox1= new fox().init(canvas)
+        console.log(11,fox1.go);
+        document.getElementById('go').onclick=function(){
+            fox1.go()
+        }
+        document.getElementById('run').onclick=function(){
+            fox1.run()
+        }
+        
+    </script>
+</body>
+
+</html>

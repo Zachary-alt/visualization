@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="cvs" width="400" height="300" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        const arr = [
+            {
+                title: 'java',
+                value: 0.3,
+                color: 'red'
+            },
+            {
+                title: 'js',
+                value: 0.3,
+                color: 'green'
+            },
+            {
+                title: 'c',
+                value: 0.1,
+                color: 'blue'
+            },
+            {
+                title: 'c++',
+                value: 0.1,
+                color: 'pink'
+            },
+            {
+                title: 'ios',
+                value: 0.2,
+                color: 'yellow'
+            },
+        ]
+        let x0 = 150, y0 = 150;
+        let radius = 100; // 半径
+        let tempAngle = -90 // 当前角度
+        arr.map(item => {
+            context.beginPath();
+            context.fillStyle = item.color;
+
+            context.moveTo(x0, y0);
+            let angle = 360 * item.value
+            let endAngle = tempAngle + angle
+
+            context.arc(x0, y0, radius, Math.PI / 180 * tempAngle, Math.PI / 180 * endAngle);
+
+            let textAngle = angle / 2 + tempAngle
+            if(textAngle>90&&textAngle<270){
+                context.textAlign='end';
+            }
+            let textX = Math.cos(textAngle * Math.PI / 180) * (radius + 20) + x0
+            let textY = Math.sin(textAngle * Math.PI / 180) * (radius + 20) + y0
+            context.fillText(item.title, textX, textY);
+
+            context.fill();
+
+            tempAngle += angle
+
+        })
+        console.log(context.measureText('123sd'));
+    </script>
+</body>
+
+</html>

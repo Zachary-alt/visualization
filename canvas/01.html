@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cvs" width="300" height="300">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let cvsCtx = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        //绘制三角形
+        ctx.beginPath(); //开始路径
+        cvsCtx.moveTo(100, 100); // 画笔移动到100,100
+        cvsCtx.lineTo(200, 100); // 从画笔位置画一条直线到200, 100
+        cvsCtx.lineTo(100, 200); // 从当前位置，再画一条直线到100, 200
+
+        // cvsCtx.lineTo(100, 100);
+        cvsCtx.closePath(); // 闭合路径
+
+        cvsCtx.lineWidth = 4; // 设置线宽
+        
+        cvsCtx.strokeStyle='red'; // 设置描边样式
+        cvsCtx.stroke(); // 描边
+
+        cvsCtx.fillStyle='green'; // 设置填充色
+        cvsCtx.fill(); // 填充
+    </script>
+</body>
+</html>

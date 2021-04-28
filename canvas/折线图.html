@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cvs" width="400" height="300" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <script>
+        const arr=[0.3,0.5,0.8,0.2,0.1,0.6]
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        let margin=10
+        let height=canvas.height-(margin*2) // y轴高度
+        let width=canvas.width-(margin*2) // x轴宽度
+        
+        context.beginPath();
+        context.strokeStyle='red';
+        // y轴
+        context.moveTo(margin, canvas.height-margin);
+        context.lineTo(margin, margin);
+        context.lineTo(0, margin*2);
+        context.moveTo(margin, margin);
+        context.lineTo(margin*2, margin*2);
+        
+        // x轴
+        context.moveTo(margin, canvas.height-margin);
+        context.lineTo(canvas.width-margin, canvas.height-margin);
+        context.lineTo(canvas.width-(margin*2), canvas.height-(margin*2));
+        context.lineTo(canvas.width-margin, canvas.height-margin);
+        context.lineTo(canvas.width-(margin*2), canvas.height);
+        
+        context.stroke();
+
+        // 折线
+        context.beginPath();
+        context.strokeStyle='green';
+        
+        let itemW = width/arr.length
+        for(let i=1;i<=arr.length;i++){
+            let x=itemW*i
+            let y=height*(1-arr[i-1])
+            i===1&&context.moveTo(x, y);
+            context.lineTo(x, y);
+        }
+
+        context.stroke();
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

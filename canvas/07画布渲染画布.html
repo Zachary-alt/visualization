@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img id="img-demo" src="" alt="">
+    <canvas id="cvs" width="600" height="600" style="border:1px solid;">
+        你的浏览器不支持canvas，请升级浏览器
+    </canvas>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        let canvas1 = document.createElement('canvas'); //获得画布
+        canvas1.width=canvas.width
+        canvas1.height=canvas.height
+        let context1 = canvas1.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        context1.save();
+        context1.beginPath();
+        
+        context1.translate(200, 200); // 当前画布位移到200,200位置
+        context1.rotate(Math.PI / 180 * 30);
+        context1.scale(2, 2); // 放大
+        context1.globalAlpha=0.3;
+        context1.moveTo(0,0);
+        context1.lineTo(400, 0);
+        context1.moveTo(0,0);
+        context1.lineTo(0,400);
+        context1.stroke();
+        
+        context.drawImage(canvas1, 0, 0);
+        
+        
+    </script>
+</body>
+
+</html>
