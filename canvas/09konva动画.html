@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/konva@4.0.0/konva.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        let stage = new Konva.Stage({
+            container:'container',
+            width:window.innerWidth,//设置全屏
+            height:window.innerHeight
+        })
+        let layer = new Konva.Layer()
+        stage.add(layer)
+
+        // 中心坐标
+        let cenX = stage.width()/2
+        let cenY = stage.height()/2
+
+        let x = 1/8*stage.width()
+        let y = cenY
+        let height = 1/12*stage.height()
+        let maxWidth=3/4*stage.width()
+
+        let innerRect = new Konva.Rect({
+            x,
+            y,
+            width:100,
+            height,
+            fill:'lightblue',
+            cornerRadius:height/2
+        })
+        layer.add(innerRect)
+        let outerRect = new Konva.Rect({
+            x,
+            y,
+            width:maxWidth,
+            height,
+            stroke:'blue',
+            strokeWidth:4,
+            cornerRadius:height/2
+        })
+        layer.add(outerRect)
+        layer.draw()
+
+        let loadIndex=0,imgsArr=['https://www.baidu.com/img/flexible/logo/pc/result@2.png','https://www.baidu.com/img/flexible/logo/pc/result@2.png']
+        for (let index = 0; index < imgsArr.length; index++) {
+            let img = new Image()
+            img.src=imgsArr[index]
+            img.onload=function(){
+                loadIndex+=1
+
+                innerRect.to({
+                    width:maxWidth*(loadIndex/imgsArr.length),
+                    duration:1.4,
+                    easing:Konva.Easings.EaseIn
+                })
+            }
+            
+        }
+    </script>
+</body>
+</html>
