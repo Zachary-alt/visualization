@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/konva@4.0.0/konva.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        const arr = [
+            {
+                title: 'java',
+                value: 0.5,
+                color: 'red'
+            },
+            {
+                title: 'js',
+                value: 0.6,
+                color: 'green'
+            },
+            {
+                title: 'c',
+                value: 0.1,
+                color: 'blue'
+            },
+            {
+                title: 'c++',
+                value: 0.3,
+                color: 'pink'
+            },
+            {
+                title: 'ios',
+                value: 0.2,
+                color: 'yellow'
+            },
+        ]
+        //第一步：创建舞台
+        let stage = new Konva.Stage({
+            container:'container',
+            width:window.innerWidth,//设置全屏
+            height:window.innerHeight
+        })
+        let layer = new Konva.Layer()
+        stage.add(layer)
+
+        let x0 = 1/8*stage.width()
+        let y0 = 3/4*stage.height()
+        let width = 3/4*stage.width() // 柱状图最大宽度
+        let height = 1/2*stage.height() // 柱状图高度
+
+        let line = new Konva.Line({
+            points:[x0,y0,(x0+width),y0],
+            strokeWidth:1,
+            stroke:'lightgreen'
+            
+        })
+        layer.add(line)
+
+        let rectWidth = width/arr.length
+        arr.forEach((item,index)=>{
+            let rect = new Konva.Rect({
+                x:x0+(1/4+index)*rectWidth,
+                y:y0,
+                // y:y0-item.value*height,
+                width:1/2*rectWidth,
+                // height:item.value*height,
+                height:0,
+                fill:item.color,
+                opcity:.8,
+                cornerRadius:10
+            })
+            layer.add(rect)
+            rect.to({
+                duration:1,
+                y:y0-item.value*height,
+                height:item.value*height,
+            })
+            let group = new Konva.Group({
+                x:x0+(index)*rectWidth+1/4*rectWidth,
+                y:y0,
+            })
+            let text=new Konva.Text({
+                x:0,
+                y:0,
+                // width:rectWidth,
+                align:'center',
+                text:item.title,
+                fontSize:1/2*rectWidth,
+                fontStyle:'blod',
+                fill:'#000',
+                rotation:30
+            })
+            group.add(text)
+            layer.add(group)
+
+            let ptext=new Konva.Text({
+                x:x0+(index)*rectWidth,
+                y:y0-item.value*height-1/3*rectWidth,
+                width:rectWidth,
+                align:'center',
+                text:item.value,
+                fontSize:1/2*rectWidth,
+                fontStyle:'blod',
+                fill:'#000'
+            })
+            layer.add(ptext)
+        })
+        layer.draw();       //绘制层到舞台上
+    </script>
+</body>
+</html>

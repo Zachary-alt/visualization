@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/konva@4.0.0/konva.min.js"></script>
+    <script src="./js/roundCircle.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        let stage = new Konva.Stage({
+            container:'container',
+            width:window.innerWidth,//设置全屏
+            height:window.innerHeight
+        })
+
+        let bgLayer = new Konva.Layer()//创建背景层
+        stage.add(bgLayer)//把层添加到舞台
+
+        // 中心坐标
+        let cenX = stage.width()/2
+        let cenY = stage.height()/2
+
+        let innerRadius=126,outerRadius=220
+
+        let innerCircle = new Konva.Circle({
+            x:cenX,
+            y:cenY,
+            radius:innerRadius,
+            stroke:"#DABBE0",
+            strokeWidth:4,
+            dash:[10,4] // 10实线，4空
+        })
+        bgLayer.add(innerCircle)
+
+        let outerCircle = new Konva.Circle({
+            x:cenX,
+            y:cenY,
+            radius:outerRadius,
+            stroke:"#DABBE0",
+            strokeWidth:4,
+            dash:[10,4] // 10实线，4空
+        })
+        bgLayer.add(outerCircle)
+
+        // 中心园
+        // let cenCircle = new Konva.Circle({
+        //     x:cenX,
+        //     y:cenY,
+        //     radius:132/2,
+        //     fill:"#525A82",
+        // })
+        // bgLayer.add(cenCircle)
+        // // 中心园环
+        // let cenRing = new Konva.Ring({
+        //     x:cenX,
+        //     y:cenY,
+        //     innerRadius:132/2,
+        //     outerRadius:90,
+        //     fill:"#E1E1E1",
+        //     opcity:0.5
+        // })
+        // bgLayer.add(cenRing)
+
+        // // 中心园文字
+        // let cenText=new Konva.Text({
+        //     x:cenX-90,
+        //     y:cenY-8,
+        //     width:180,
+        //     align:'center',
+        //     text:'web全栈',
+        //     fontSize:16,
+        //     fontStyle:'bold',
+        //     fill:'#fff'
+        // })
+        // bgLayer.add(cenText)
+        
+        let cenRound= new RoundCircle({
+            x:cenX,
+            y:cenY,
+            innerRadius:132/2,
+            outerRadius:90,
+            innerFill:"#525A82",
+            outerFill:"#eee",
+            text:'web全栈',
+            fontSize:16,
+            fontStyle:'bold',
+            textColor:'#fff'
+        })
+        cenRound.addGroupToLayer(bgLayer)
+
+        // 创建动画层
+        let animateLayer = new Konva.Layer()
+        stage.add(animateLayer)
+        // 内层Group
+        let L1group = new Konva.Group({
+            x:cenX,
+            y:cenY,
+        })
+        let L1Round1= new RoundCircle({
+            x:innerRadius*Math.cos(60*Math.PI/180),
+            y:innerRadius*Math.sin(60*Math.PI/180),
+            innerRadius:20,
+            outerRadius:30,
+            innerFill:"pink",
+            outerFill:"#eee",
+            text:'HTML',
+            fontSize:12,
+            fontStyle:'bold',
+            textColor:'#fff'
+        })
+        let L1Round2= new RoundCircle({
+            x:innerRadius*Math.cos(-60*Math.PI/180),
+            y:innerRadius*Math.sin(-60*Math.PI/180),
+            innerRadius:20,
+            outerRadius:30,
+            innerFill:"green",
+            outerFill:"#eee",
+            text:'CSS',
+            fontSize:12,
+            fontStyle:'bold',
+            textColor:'#fff'
+        })
+        let L1Round3= new RoundCircle({
+            x:innerRadius*Math.cos(180*Math.PI/180),
+            y:innerRadius*Math.sin(180*Math.PI/180),
+            innerRadius:20,
+            outerRadius:30,
+            innerFill:"blue",
+            outerFill:"#eee",
+            text:'JS',
+            fontSize:12,
+            fontStyle:'bold',
+            textColor:'#fff'
+        })
+        L1Round1.addGroupToLayer(L1group)
+        L1Round2.addGroupToLayer(L1group)
+        L1Round3.addGroupToLayer(L1group)
+        animateLayer.add(L1group)
+        // 外层Group
+        let L2group = new Konva.Group({
+            x:cenX,
+            y:cenY,
+        })
+        let L2Round1= new RoundCircle({
+            x:outerRadius*Math.cos(60*Math.PI/180),
+            y:outerRadius*Math.sin(60*Math.PI/180),
+            innerRadius:40,
+            outerRadius:50,
+            // innerFill:"pink",
+            outerFill:"#eee",
+            text:'Node',
+            fontSize:12,
+            fontStyle:'bold',
+            textColor:'#fff'
+        })
+        L2Round1.addGroupToLayer(L2group)
+        animateLayer.add(L2group)
+
+
+        bgLayer.draw()
+        animateLayer.draw()
+        let rotateAngleSecond =60
+        let animate = new Konva.Animation((frame)=>{
+            // 每隔一段时间执行一次
+            // frame.timeDiff // 上一针和当前帧的时间差
+            let rotateAgl = rotateAngleSecond*frame.timeDiff/1000  // 1s旋转60度
+            L1group.rotate(rotateAgl)
+            L1group.getChildren().each(item=>{ // 文字反转
+                item.rotate(-rotateAgl)
+            })
+            L2group.rotate(-rotateAgl)
+            L2group.getChildren().each(item=>{
+                item.rotate(rotateAgl)
+            })
+        },animateLayer)
+        animate.start()
+
+        animateLayer.on('mouseover',()=>{
+            rotateAngleSecond = 10
+        })
+        animateLayer.on('mouseout',()=>{
+            rotateAngleSecond = 60
+        })
+    </script>
+</body>
+</html>

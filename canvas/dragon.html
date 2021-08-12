@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cvs" width="300" height="300">
+        你的浏览器不支持canvas，请升级浏览器.浏览器不支持，显示此行文本
+    </canvas>
+    <div id="container"></div>
+    <style>
+        #container{
+            position: relative;
+        }
+        .bubble{
+            position: absolute;
+            transition: transform 1.6s;
+        }
+        .bubble:hover{
+            transform: scale(5.0);
+        }
+    </style>
+    <script>
+        let canvas = document.getElementById('cvs'); //获得画布
+        let context = canvas.getContext('2d'); //注意：2d小写， 3d：webgl
+
+        let image = new Image();
+        image.src='/dragon.png'
+        let image2 = new Image();
+        image2.src='/bubble.jpg'
+        image.onload=function(){
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            context.drawImage(image,0,0);
+
+            let imageData = context.getImageData(0,0,image.width,image.height).data;
+            console.log(imageData);
+
+            context.fillStyle = "#ffffff";
+            context.fillRect(0,0,image.width,image.height); 
+
+            let gap = 6;
+
+            var dragonContainer = document.getElementById("container");
+            var dragonScale = 2;
+            for (var h = 0; h < image.height; h+=gap) {
+                for(var w = 0; w < image.width; w+=gap){
+                        var position = (image.width * h + w) * 4;
+                        var r = imageData[position], g = imageData[position + 1], b = imageData[position + 2];
+                        // console.log(r,g,b);
+                        if(r+g+b<60*3){
+                            context.fillStyle = "#000";
+                            // context.fillRect(w,h,4,4);
+                            context.drawImage(image2,w,h,15,15);
+
+                            var bubble = document.createElement("img");
+                            bubble.src = "bubble.jpg";
+                            bubble.setAttribute("class","bubble");
+
+                            var bubbleSize = Math.random()*10+20;
+                            bubble.style.left = (w*dragonScale-bubbleSize/2) + "px";
+                            bubble.style.top = (h*dragonScale-bubbleSize/2) + "px";
+                            bubble.style.width = bubble.style.height = bubbleSize+"px";
+                            bubble.style.animationDuration = Math.random()*6+4 + "s";
+
+                            dragonContainer.appendChild(bubble);
+                            }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
